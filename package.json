@@ -1,21 +1,48 @@
 {
   "name": "better-next-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.1-alpha.1",
+  "description": "A typesafe and structured way to build Next.js App Router API handlers. Get a tRPC-like developer experience with Zod validation and composable middleware, without leaving your standard API routes.",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup",
+    "release": "pnpm release-it"
   },
-  "keywords": [],
+  "keywords": [
+    "nextjs",
+    "api",
+    "typescript",
+    "zod",
+    "validation",
+    "middleware",
+    "typesafe",
+    "app-router"
+  ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/programming-with-ia/better-next-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/programming-with-ia/better-next-api/issues"
+  },
+  "homepage": "https://github.com/programming-with-ia/better-next-api#readme",
   "peerDependencies": {
-    "zod": "^4",
-    "next": "*"
+    "next": "*",
+    "zod": ">=3"
   },
   "devDependencies": {
-    "tsup": "^8.5.1",
-    "zod": "^4.1.12",
-    "next": "16.0.2"
+    "release-it": "^19.0.5",
+    "next": "*",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3",
+    "zod": ">=3"
   }
 }
