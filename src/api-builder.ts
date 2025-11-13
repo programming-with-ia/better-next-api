@@ -60,6 +60,23 @@ export type HandlerInput<
   req: NextRequest;
 };
 
+/**
+ * @description Checks if an error is an internal Next.js error (e.g., redirect, notFound).
+ * These errors should be re-thrown to be handled by the Next.js framework.
+ * @param {unknown} error - The error to check.
+ * @returns {boolean} - True if the error is a Next.js internal error, false otherwise.
+ */
+function isNextJsInternalError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null || !("digest" in error)) {
+    return false;
+  }
+
+  const digest = (error as { digest?: string }).digest;
+
+  // Checks for NEXT_REDIRECT, NEXT_NOT_FOUND, etc.
+  return typeof digest === "string" && digest.startsWith("NEXT_");
+}
+
 // --- Main Class ---
 
 export class ApiBuilder<
@@ -268,6 +285,9 @@ export class ApiBuilder<
         return NextResponse.json(result, { status });
       } catch (error: unknown) {
         // --- 5. Error Handling ---
+        if (isNextJsInternalError(error)) {
+          throw error;
+        }
 
         if (error instanceof ApiError) {
           return NextResponse.json(
