@@ -236,13 +236,15 @@ export class ApiBuilder<
     // This is the actual Next.js route handler
     return async (
       req: NextRequest,
-      routeCtx: { params: unknown }
+      routeCtx: Promise<{ params: unknown }>
     ): Promise<NextResponse> => {
       try {
         // --- 1. Validation ---
         const validatedContext = await this.validate(
           this.contextSchema,
-          routeCtx.params
+          (
+            await routeCtx
+          ).params
         );
         const validatedQuery = await this.validate(
           this.querySchema,
